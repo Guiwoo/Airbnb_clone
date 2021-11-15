@@ -15,3 +15,4 @@ it's kind of npm start
 ---
 
 1.  Needs to handle google or facebook login etc..
+2.  The application names should be plural
