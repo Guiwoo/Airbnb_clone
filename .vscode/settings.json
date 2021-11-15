@@ -1,0 +1,7 @@
+{
+    "python.pythonPath": "/Users/guiwoopark/.local/share/virtualenvs/airbnb-clone-fS61b1Fh/bin/python",
+    "python.linting.flake8Enabled": true,
+    "python.linting.enabled": true,
+    "python.formatting.provider": "black",
+    "python.linting.flake8Args": ["--max-line-length=91"]
+}
