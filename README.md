@@ -45,3 +45,20 @@ it's kind of npm start
 | CoreModel ⬇️  |
 | ------------  |
 | models.Model  |
+
+4. realationship
+
+---
+
+| RoomsModel ⬇️         |
+| --------------------- | --------------- |
+| CoreModel ⬇️ -------- |
+|                       |                 |
+| models.Model          | AbstractItem ⬇️ |
+|                       | RoomType        |
+
+| Many to Many && foreignKey |
+| -------------------------- |
+
+@ondelete=Models.CASCADE if i delete User ? will delete also room
+@for the foreignKey
