@@ -62,3 +62,9 @@ it's kind of npm start
 
 @ondelete=Models.CASCADE if i delete User ? will delete also room
 @for the foreignKey
+
+## Reviews Model
+
+@Foreignkey => connected model to model
+ex) def **str**(self):
+--review.user.username like this
