@@ -68,3 +68,9 @@ it's kind of npm start
 @Foreignkey => connected model to model
 ex) def **str**(self):
 --review.user.username like this
+
+## User.objects
+
+QuerySet Api--
+=> QuerySet ? List of objects
+something.model_set.all()=>means get all connected by Foreinkey!!
