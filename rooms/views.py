@@ -1,7 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from django.core.paginator import EmptyPage, Paginator
 from . import models
 
 
 def all_rooms(req):
-    all_room_data = models.Room.objects.all()
-    return render(req, "rooms/home.html", context={"rooms": all_room_data})
+    page = int(req.GET.get("page", 1))
+    room_list = models.Room.objects.all()
+    paginator = Paginator(room_list, 10, orphans=5)
+    try:
+        rooms = paginator.page(int(page))
+        return render(req, "rooms/home.html", {"page": rooms})
+    except EmptyPage:
+        return redirect("/")
