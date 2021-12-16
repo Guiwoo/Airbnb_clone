@@ -74,3 +74,11 @@ ex) def **str**(self):
 QuerySet Api--
 => QuerySet ? List of objects
 something.model_set.all()=>means get all connected by Foreinkey!!
+
+## Gulp with Tailwind
+
+"Just downgrade "
+error "Postcss 8 blarblar"
+npm uninstall tailwindcss postcss autoprefixer
+
+npm install tailwindcss@npm:@tailwindcss/postcss7-compat @tailwindcss/postcss7-compat postcss@^7 autoprefixer@^9
