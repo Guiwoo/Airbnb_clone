@@ -15,4 +15,25 @@
   }
 }
 
+.btn {
+  @apply text-center rounded-lg py-3 font-light text-lg w-full;
+}
+
+.sibal {
+  @apply bg-red-600;
+}
+
+input {
+  @apply text-left border border-gray-600 px-5 rounded-lg w-full py-3 font-light;
+  &:focus {
+    @apply outline-none border-red-200;
+  }
+}
+
+form {
+  input {
+    @apply mb-3;
+  }
+}
+
 @tailwind utilities;
