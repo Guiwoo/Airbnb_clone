@@ -8,11 +8,18 @@
     {% include 'partials/social_login.html' %}
     <form method="POST" action="{% url "users:signup" %}">
         {% csrf_token %}
-        {{form.first_name}}
-        {{form.last_name}}
-        {{form.email}}
-        {{form.password}}
-        {{form.password1}}
+
+        {% for field in form %}
+            <div class="input {% if field.erros %}has_error{% endif %}">
+                {{field}}
+                {% if field.errors %}
+                    {% for error in field.errors %}
+                    <span class="text-red-700 font-medium text-sm">{{error}}</span>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        {% endfor %}
+
         <button class="btn bg-blue-300 text-white w-full">Sign up</button>
     </form>
     <div class="my-3"><span class="mr-2">Have an account?</span><a href="{% url "users:signup"%}" class="text-blue-300">Log in</a></div>
