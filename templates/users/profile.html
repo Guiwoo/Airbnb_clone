@@ -3,19 +3,33 @@
 {% block page_title %}{{userobj.first_name}}'s Profile{% endblock %}
 
 {% block content %}
-<div class="container lg:w-5/12  md:w-1/2 xl:w-1/4 mx-auto my-10 flex flex-col items-center border p-6 border-gray-300">
+    <div class="h-75vh">
+        <div class="container lg:w-5/12  md:w-1/2 xl:w-1/4 mx-auto my-10 flex flex-col items-center border p-6 border-gray-300">
 
-    {% include "mixins/user_avatar.html" with user=userobj %}
-
-    <div class="flex items-center">
-        <span class="text-3xl mt-1">{{userobj.first_name}}</span>
-        {% if userobj.superhost %}
-            <i class="fas fa-check-circle text-teal-400 ml-1"></i>
+            {% include "mixins/user_avatar.html" with user=userobj %}
+        
+            <div class="flex items-center">
+                <span class="text-3xl mt-1">{{userobj.first_name}}</span>
+                {% if userobj.superhost %}
+                    <i class="fas fa-check-circle text-teal-400 ml-1"></i>
+                {% endif %}
+            </div>
+        
+            <span class="text-lg">{{userobj.bio}}</span>
+        
+            {% if user == userobj %}
+                <a href="{% url "users:updateProfile" %}" class="btn-link">Edit Profile</a>
+            {% endif %}
+        </div>
+        {% if userobj.rooms.count > 0 %}
+        <div class="container flex flex-col items-center mx-auto">
+            <h3 class="mb-12 text-2xl">{{userobj.first_name}}'s Room</h3>
+            <div class="flex flex-wrap">
+                {% for room in  userobj.rooms.all %}
+                    {% include 'mixins/room_card.html' with room=room %}
+                {% endfor %}
+            </div>
+        </div>
         {% endif %}
     </div>
-
-    <span class="text-lg">{{userobj.bio}}</span>
-
-    <a href="#" class="btn btn--small bg-indigo-400 rounded-sm">Edit Profile</a>
-</div>
 {% endblock %}

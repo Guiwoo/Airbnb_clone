@@ -1,4 +1,5 @@
 import os
+from django.views.generic.edit import UpdateView
 import requests
 from django.views.generic import FormView, DetailView
 from django.urls import reverse_lazy
@@ -201,3 +202,21 @@ class ProfileView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
+
+
+class UpdateProfile(UpdateView):
+    model = models.User
+    template_name = "users/update.html"
+    fields = (
+        "first_name",
+        "last_name",
+        "avatar",
+        "gender",
+        "bio",
+        "birthday",
+        "language",
+        "currency",
+    )
+
+    def get_object(self, queryset=None):
+        return self.request.user
