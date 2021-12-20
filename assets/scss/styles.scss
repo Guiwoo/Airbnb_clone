@@ -17,6 +17,9 @@
 
 .btn {
   @apply text-center rounded-lg py-3 font-light text-lg w-full;
+  &.btn--small {
+    @apply py-3 rounded-lg;
+  }
 }
 
 .sibal {
@@ -41,6 +44,41 @@ form {
         }
       }
     }
+  }
+}
+
+@keyframes FadeIn {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.message {
+  animation: FadeIn 5s ease-in-out forwards;
+  &.error {
+    @apply bg-red-600;
+    transform: translateY(-50px);
+  }
+  &.info {
+    @apply bg-blue-200;
+    transform: translateY(50px);
+  }
+  &.success {
+    @apply bg-green-200;
+    transform: translateY(50px);
+  }
+  &.warning {
+    @apply bg-yellow-200;
+    transform: translateY(-50px);
   }
 }
 

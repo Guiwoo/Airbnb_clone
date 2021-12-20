@@ -1,10 +1,11 @@
 import os
 import requests
-from django.views.generic import FormView
+from django.views.generic import FormView, DetailView
 from django.urls import reverse_lazy
 from django.shortcuts import redirect, reverse
 from django.contrib.auth import authenticate, login, logout
 from django.core.files.base import ContentFile
+from django.contrib import messages
 from users import models
 from . import forms
 
@@ -27,6 +28,7 @@ class LoginView(FormView):
 
 
 def log_out(req):
+    messages.info(req, f"See you later")
     logout(req)
     return redirect(reverse("core:home"))
 
@@ -85,7 +87,7 @@ def github_callback(request):
             result_json = result.json()
             error = result_json.get("error", None)
             if error is not None:
-                raise GithubException()
+                raise GithubException("Can not get a access token!")
             else:
                 access_token = result_json.get("access_token")
                 profile_request = requests.get(
@@ -104,7 +106,7 @@ def github_callback(request):
                     try:
                         user = models.User.objects.get(email=email)
                         if user.login_method != models.User.LOGIN_GITUB:
-                            raise GithubException()
+                            raise GithubException("Please log in {user.login_method}")
                     except models.User.DoesNotExist:
                         user = models.User.objects.create(
                             email=email,
@@ -117,11 +119,12 @@ def github_callback(request):
                         user.set_unusable_password()
                         user.save()
                     login(request, user)
+                    messages.success(request, f"Welcome back! {user.first_name}")
                     return redirect(reverse("core:home"))
                 else:
-                    raise GithubException()
+                    raise GithubException("User does not Exist!")
         else:
-            raise GithubException()
+            raise GithubException("Can not get a code!")
     except GithubException:
         # send error message unathorize
         return redirect(reverse("users:login"))
@@ -150,7 +153,7 @@ def kakao_callback(request):
         token_json = token_request.json()
         error = token_json.get("error", None)
         if error is not None:
-            raise KakaoException()
+            raise KakaoException("Can not get a authorization code!")
         access_token = token_json.get("access_token")
         profile_request = requests.get(
             f"https://kapi.kakao.com/v2/user/me",
@@ -159,14 +162,14 @@ def kakao_callback(request):
         profile_json = profile_request.json()
         email = profile_json.get("kakao_account").get("email", None)
         if email is None:
-            raise KakaoException()
+            raise KakaoException("Email does not exist on Kakao authorization")
         profile = profile_json.get("kakao_account").get("profile")
         nickname = profile.get("nickname")
         profile_image = profile.get("profile_image_url")
         try:
             user = models.User.objects.get(email=email)
             if user.login_method != models.User.LOGIN_KAKAO:
-                raise KakaoException()
+                raise KakaoException(f"Please Login with :{user.login_method}")
         except models.User.DoesNotExist:
             user = models.User.objects.create(
                 email=email,
@@ -183,28 +186,18 @@ def kakao_callback(request):
                     f"{nickname}-avatar", ContentFile(photo_request.content)
                 )
         login(request, user)
+        messages.success(request, f"Welcome back! {user.first_name}")
         return redirect(reverse("core:home"))
-    except KakaoException:
+    except KakaoException as e:
+        messages.error(request, e)
         return redirect(reverse("users:login"))
 
 
-# {
-#     "id": 2036353330,
-#     "connected_at": "2021-12-16T10:06:26Z",
-#     "properties": {"nickname": "Park"},
-#     "kakao_account": {
-#         "profile_nickname_needs_agreement": False,
-#         "profile_image_needs_agreement": False,
-#         "profile": {
-#             "nickname": "Park",
-#             "thumbnail_image_url": "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_110x110.jpg",
-#             "profile_image_url": "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg",
-#             "is_default_image": True,
-#         },
-#         "has_email": True,
-#         "email_needs_agreement": False,
-#         "is_email_valid": True,
-#         "is_email_verified": True,
-#         "email": "pbk120@naver.com",
-#     },
-# }
+class ProfileView(DetailView):
+    model = models.User
+    template_name = "users/profile.html"
+    context_object_name = "userobj"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context

@@ -10,6 +10,7 @@
     <script src="https://kit.fontawesome.com/29cff8c3f0.js" crossorigin="anonymous"></script>
 </head>
 <body class="text-gray-800 mt-24 font-lig">
+    {% include "partials/messages.html" %}
     <header class="container max-w-full flex items-center inset-0 justify-between px-6 h-20 border-b border-gray-400 fixed bg-red-200 text-white">
         <div class="flex items-center w-1/3">
             <a href="{% url "core:home" %}" class="mr-6">
@@ -24,7 +25,6 @@
         {% include 'partials/nav.html' %}
     </header>
     {% block content %}{% endblock %}
-    
     {% include 'partials/footer.html' %}
 </body>
 </html>

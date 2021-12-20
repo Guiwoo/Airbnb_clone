@@ -1,0 +1,9 @@
+<form method="POST" class="w-full">
+    {% csrf_token %}
+
+    {% for field in form %}
+        {% include "mixins/auth/form_input.html" %}
+    {% endfor %}
+
+    <button class="btn bg-blue-300 text-white w-full">{{cta}}</button>
+</form>
