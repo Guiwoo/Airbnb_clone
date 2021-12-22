@@ -94,6 +94,11 @@ class Room(core_models.TimeStampedModel):
     def get_absolute_url(self):
         return reverse("rooms:detail", kwargs={"pk": self.pk})
 
+    def get_next_four(self):
+        photos = self.photos.all()[1:5]
+        print(photos)
+        return photos
+
 
 class Photo(core_models.TimeStampedModel):
     """Photo Model Definition"""

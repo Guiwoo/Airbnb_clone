@@ -24,7 +24,7 @@
         {% if userobj.rooms.count > 0 %}
         <div class="container flex flex-col items-center mx-auto">
             <h3 class="mb-12 text-2xl">{{userobj.first_name}}'s Room</h3>
-            <div class="flex flex-wrap">
+            <div class="flex flex-wrap w-full">
                 {% for room in  userobj.rooms.all %}
                     {% include 'mixins/room_card.html' with room=room %}
                 {% endfor %}
