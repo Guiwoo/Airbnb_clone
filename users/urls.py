@@ -14,5 +14,6 @@ urlpatterns = [
     path("verify/<str:key>", views.complete_verification, name="complete_verification"),
     path("update-profile", views.UpdateProfile.as_view(), name="updateProfile"),
     path("update-password", views.UpdatePassword.as_view(), name="updatePassword"),
+    path("hosting/", views.switch_hosting, name="hosting"),
     path("<int:pk>/", views.ProfileView.as_view(), name="profile"),
 ]
