@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load is_booked %}
 
 {% block page_title %}{{room.name}}{% endblock %}
 
@@ -97,9 +98,12 @@
                                 <span>{{day}}</span>
                             {% endfor %}
                             {% for day in cal.get_days %}
+                                {% is_booked room day as is_booked_bool %}
                                 {% if day.number != 0 %}
                                     {% if day.past %}
                                         <span class="rounded bg-gray-200 w-full text-center p-1 text-gray-400">{{day.number}}</span>
+                                    {% elif is_booked_bool %}
+                                        <span class="rounded bg-gray-200 w-full text-center p-1 text-gray-400 line-through">{{day.number}}</span>
                                     {% else %}
                                         <span class="hover:bg-blue-300 hover:text-white bg-gray-200 text-center w-full rounded p-1 text-gray-600 cursor-pointer">{{day}}</span>
                                     {% endif %}
