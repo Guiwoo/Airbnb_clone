@@ -43,3 +43,20 @@ class ReservationDetailView(View):
         return render(
             self.request, "reservations/detail.html", {"reservation": reservation}
         )
+
+
+def edit_reservation(req, pk, verb):
+    reservation = models.Reservation.objects.get_or_none(pk=pk)
+    if not reservation or (
+        reservation.guest != req.user and reservation.room.host != req.user
+    ):
+        raise Http404()
+
+    if verb == "confirm":
+        reservation.status = models.Reservation.STATUS_CONFIRMED
+    if verb == "cancel":
+        reservation.status = models.Reservation.STATUS_CANCELED
+        models.BookedDay.objects.filter(reservation=reservation).delete()
+    reservation.save()
+    messages.success(req, "Reservation Updated")
+    return redirect(reverse("reservations:detail", kwargs={"pk": pk}))
