@@ -6,9 +6,18 @@
         <span>&copy; 2021 Gbnb, {% trans "All rights reserved" %}.</span>
     </div>
     <div class="flex mt-10 h-1/2">
+        {% get_current_language as LANGUAGE_CODE %}
         <select class="w-1/5" id="js-lang">
-            <option value="en">English</option>
-            <option value="ko">Korean</option>
+            <option value="en" 
+            {% if LANGUAGE_CODE == "en" %}
+                selected
+            {% endif %}
+                >English</option>
+            <option value="ko" 
+            {% if LANGUAGE_CODE == "ko" %}
+                selected
+            {% endif %}
+                >Korean</option>
         </select>
     </div>
 </footer>

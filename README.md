@@ -95,3 +95,21 @@ npm install tailwindcss@npm:@tailwindcss/postcss7-compat @tailwindcss/postcss7-c
    !! Don't add any extra line, should tag on template files first
 6. django-admin compilemessages -> it will make .mo file
    ->> Nothing to change still , need to fix session
+7. Made a url for the hitting database to change lang ->>base template
+8. config.setting.py
+   Put this middleware "django.middleware.locale.LocaleMiddleware",
+   add LANGUAGE_COOKIE_NAME = "django_language"
+9. on view side
+   translation.activate(lang) "Get a current Lang"
+   response.set_cookie(settings.LANGUAGE_COOKIE_NAME, lang) "Change lang as request "
+
+# what if wanna tranlate text which has variable.
+
+@use {% blocktrans %} and the variable outside of blocktrans
+ex) {% blocktrans with current_page=page_obj.number %} {{current_page}} {% endblocktrans %}
+!!Eveytime add trans messages need to makemessages and compile
+
+# code translate
+
+In models.py ,gettext*lazy kind of reverse_lazy
+tip) gettext_lazy as * "because it looks way better than gettext_lazy"
