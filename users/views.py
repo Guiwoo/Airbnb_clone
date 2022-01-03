@@ -1,5 +1,6 @@
 import os
 import requests
+from django.http import HttpResponse
 from django.views.generic.edit import UpdateView
 from django.contrib.auth.decorators import login_required
 from django.views.generic import FormView, DetailView
@@ -38,7 +39,7 @@ class LoginView(mixins.LoggedOutOnlyView, FormView):
 
 
 def log_out(req):
-    messages.info(req, f"See you later")
+    messages.info(req, f'{"See you later"}')
     logout(req)
     return redirect(reverse("core:home"))
 
@@ -166,7 +167,7 @@ def kakao_callback(request):
             raise KakaoException("Can not get a authorization code!")
         access_token = token_json.get("access_token")
         profile_request = requests.get(
-            f"https://kapi.kakao.com/v2/user/me",
+            f'{"https://kapi.kakao.com/v2/user/me"}',
             headers={"Authorization": f"Bearer {access_token}"},
         )
         profile_json = profile_request.json()
@@ -268,3 +269,10 @@ def switch_hosting(request):
     except KeyError:
         request.session["is_hosting"] = True
     return redirect(reverse("core:home"))
+
+
+def switch_lang(req):
+    lang = req.GET.get("lang", None)
+    if lang is not None:
+        pass
+    return HttpResponse(status=200)

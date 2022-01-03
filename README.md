@@ -82,3 +82,16 @@ error "Postcss 8 blarblar"
 npm uninstall tailwindcss postcss autoprefixer
 
 npm install tailwindcss@npm:@tailwindcss/postcss7-compat @tailwindcss/postcss7-compat postcss@^7 autoprefixer@^9
+
+## Translator
+
+1. django needs to recognize new folder locale add on it
+   ex) LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)
+2. Go to template {% load i18n %}
+3. {% trans "etc..." %}
+   ->> Nothing to change yet
+4. django-admin makemessages --locale="put language here"
+5. Fill up in local > django.po file
+   !! Don't add any extra line, should tag on template files first
+6. django-admin compilemessages -> it will make .mo file
+   ->> Nothing to change still , need to fix session
