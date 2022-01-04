@@ -12,8 +12,6 @@ it's kind of npm start
 
 # Why needs users applications ?
 
----
-
 0. django-admin startproject users like this(Group of Function)
 1. Needs to handle google or facebook login etc..
 2. The application names should be plural
@@ -24,7 +22,7 @@ it's kind of npm start
 1. set a model , abstractUser from django.contrib.auth.models
 2. python manage.py makemigrations
 
-# Don't forget have to play django-rule
+######## Don't forget have to play django-rule
 
 # admin.py
 
@@ -40,25 +38,21 @@ it's kind of npm start
 2. add on setting.py (Installed_Apps)
 3. models.Model => coreModel => roomsModle
 
-| RoomsModel ⬇️ |
-| ------------- |
-| CoreModel ⬇️  |
-| ------------  |
-| models.Model  |
+| Models         |
+| -------------- |
+| RoomsModel ⬇️  |
+| CoreModel ⬇️   |
+| `models.Model` |
 
 4. realationship
 
----
-
-| RoomsModel ⬇️         |
-| --------------------- | --------------- |
-| CoreModel ⬇️ -------- |
-|                       |                 |
-| models.Model          | AbstractItem ⬇️ |
-|                       | RoomType        |
+| RoomsModel ⬇️ |
+| ------------- | :-------------: |
+| CoreModel ⬇️  |                 |
+| models.Model  | AbstractItem ⬇️ |
+|               |    RoomType     |
 
 | Many to Many && foreignKey |
-| -------------------------- |
 
 @ondelete=Models.CASCADE if i delete User ? will delete also room
 @for the foreignKey
@@ -107,7 +101,7 @@ npm install tailwindcss@npm:@tailwindcss/postcss7-compat @tailwindcss/postcss7-c
 
 @use {% blocktrans %} and the variable outside of blocktrans
 ex) {% blocktrans with current_page=page_obj.number %} {{current_page}} {% endblocktrans %}
-!!Eveytime add trans messages need to makemessages and compile
+######!!Eveytime add trans messages need to makemessages and compile
 
 # code translate
 
@@ -126,3 +120,28 @@ Make Template for lists => with templatetag
 4. display lists with new url
 5. OneToOne field is so gooood user profiles,user so good
    => user have only one list, configure as onetoone file on list modles
+
+# Conversation
+
+> How it's going ?
+
+    - Go check those user have been chatting
+    - Send to Chat Room
+
+1. How to check 2people in the Room ?
+   - Use filter chaining (\*`Not good` on database side)
+   - Use Q object for filtering ex) Q(age>19) & Q(born>2000)
+     - > mutilple chain (`(Q(age>19) & Q(born>2000))` | `Q(nationality=korean') & Q(live!=korea)`)
+2. extend User model from model managers
+
+3. Send to Chat room
+
+4. nice variable in for loop on template
+
+   > forloop.first
+
+5. Chat for from
+   > Do i need to use django forms ? for only one input ?
+   - Not bad to use just plane input and form
+     -Have to remember needto put name on input
+   - Django forms will help that form way better
