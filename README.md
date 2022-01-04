@@ -113,3 +113,16 @@ ex) {% blocktrans with current_page=page_obj.number %} {{current_page}} {% endbl
 
 In models.py ,gettext*lazy kind of reverse_lazy
 tip) gettext_lazy as * "because it looks way better than gettext_lazy"
+
+# Favorit List
+
+get_or_create ==> it will return one object!
+Make Template for lists => with templatetag
+
+1. mkdir templatetag, touch **init**.py , what_ever_i_want.py-0
+2. register tag "takes_context" ? = call template with dajngo req
+   => it will return bunch of things especialy requset!
+3. Own one url instead two urls for toggling
+4. display lists with new url
+5. OneToOne field is so gooood user profiles,user so good
+   => user have only one list, configure as onetoone file on list modles

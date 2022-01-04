@@ -1,0 +1,16 @@
+{% extends "base.html"%}
+
+{% block page_title %}{{userobj.first_name}}'s Profile{% endblock %}
+
+{% block content %}
+    <div class="h-75vh">
+        <h3 class="mb-12 text-2xl">Your Favourites</h3>
+        <div class="container flex flex-col items-center mx-auto">
+            <div class="flex flex-wrap w-full">
+                {% for room in  user.list.rooms.all %}
+                    {% include 'mixins/room_card.html' with room=room %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
